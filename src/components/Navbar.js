@@ -1,11 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../state/index';
 
 const Navbar = () => {
-    const amount = useSelector(state => state.amount);
+    const { changeTheme } = bindActionCreators(actionCreators, useDispatch());
+    const { amount, theme } = useSelector(state => state);
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className={`navbar navbar-expand-lg navbar-${theme} bg-${theme}`}>
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">Redux bank</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,8 +23,9 @@ const Navbar = () => {
                             <Link className="nav-link" to="/about">About</Link>
                         </li>
                     </ul>
-                    <button className="btn btn-light disabled">Your balance: {amount}</button>
+                    <button className={`btn btn-${theme === 'light' ? 'dark' : 'light'} disabled`}>Your balance: {amount}</button>
                 </div>
+                <button className={`btn btn-${theme === 'light' ? 'dark' : 'light'}`} onClick={() => { changeTheme(theme === 'light' ? 'dark' : 'light') }}>Dark mode</button>
             </div>
         </nav>
     )

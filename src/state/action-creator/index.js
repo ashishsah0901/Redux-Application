@@ -15,3 +15,12 @@ export const withdrawMoney = (amount) => {
         })
     }
 }
+
+export const changeTheme = (theme) => {
+    return (dispatch) => {
+        dispatch({
+            type: 'theme',
+            payload: theme
+        })
+    }
+}
